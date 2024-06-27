@@ -1,52 +1,78 @@
 #!/bin/bash
 
+echo "------------------------------------------------------------------------------------------------------------------"
+echo "Welcome to PurgePro - streamlines file cleanup, effortlessly removing obsolete files and optimizing storage space."
+echo "------------------------------------------------------------------------------------------------------------------"
+echo ""
 # Provide the path of directory -> User should provide path
-print -n "Directory path:-> "
+print -n "Specify the path of directory to cleanup:-> "
 read Path
 
 # Check if the directory is present or not
-[ -d $Path ] && echo "Directory exists" || echo "Please enter valid directory path"
+#[ -d $Path ] && echo "Thanks for providing directory." || echo "Please enter the valid directory path!" exit 1;
 
-print -n "Specify the minimum size of the files to be compressed in MB:-> "
+if [ -d $Path ]
+then
+	echo "Thanks for providing directory."
+else
+	echo "Please enter the valid directory path!"
+	exit 1
+fi
+
+echo ""
+print -n "Specify the minimum size of the files to be compressed in MB (E.g. 0.1 or 5):-> "
 read userMentionedSize
+echo ""
 
-#print -n "Specify directory path for archive folder:-> "
+#print -n "Specify directory path for moving compressed files to:-> "
 #read Path
 
 # Create archive folder if not already present
-archivePath=/Users/ganesh/work/learning/shellscripting/projects/purgepro/PurgePro/archive
-mkdir /Users/ganesh/work/learning/shellscripting/projects/purgepro/PurgePro/archive &> /dev/null
+
+# Used date convention considering files created daily  but not cleanedup
+currentDate=$(date +"%Y-%m-%d")
+archivePath="/Users/ganesh/Desktop/archive-$currentDate"
+mkdir $archivePath &> /dev/null
+
 if [[ $? -eq 0 ]]
 then
-	echo "Folder successfully created"
+	echo "Folder successfully created at $archivePath to store compressed files."
 else
-	echo "Folder already exists with same name"
+	echo "Folder $archivePath already exist to store compressed files."
 fi
 
 # Find all the files with size more than given size
-ls $Path > files.txt
+ls $Path > "$archivePath/files.txt"
 
 while read myfile
 do
-	#echo "File name: $myfile"
 	filePath="$Path/$myfile"
 	sizeinBytes=$(stat -f%z $filePath)
-	#echo "Size of $myfile -> $sizeinBytes"
 	sizeinMB=$(echo "scale=2; $sizeinBytes/1048576" | bc)
-	#echo "Size of $myfile -> $sizeinMB MB"
 	
 	if [[ $sizeinMB -ge $userMentionedSize ]]
 	then
 		filePath="$Path/$myfile"
-		mv $filePath $archivePath
-	else
-		#echo "less than specified MB-> $myfile"
+
+		# Compress each file
+		gzip $filePath
+
+		# Move the compressed files in archive folder
+		mv "$filePath.gz" $archivePath
 	fi
-done < files.txt 
+done < "$archivePath/files.txt"
 
+echo ""
+print -n "Do you want to delete these archived files? (Y/y):-> "
+read response
 
-# Compress each file
-#tar -cfz 
+if [[ $response == "Y" || $response == "y" ]]
+then
+	rm -rf $archivePath
+	echo "Archived files permanently deleted."
+fi
 
-# Move the compressed files in archive folder
-# Make a cron job to run the script at given time -> User should provide specific time
+echo ""
+echo "Thanks for using PurgePro!!!"
+
+# (ToDo) Make a cron job to run the script at given time -> User should provide specific time
