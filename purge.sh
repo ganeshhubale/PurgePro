@@ -4,12 +4,12 @@ echo "--------------------------------------------------------------------------
 echo "Welcome to PurgePro - streamlines file cleanup, effortlessly removing obsolete files and optimizing storage space."
 echo "------------------------------------------------------------------------------------------------------------------"
 echo ""
+
 # Provide the path of directory -> User should provide path
 echo -n "Specify the path of directory to cleanup:-> "
 read Path
 
 # Check if the directory is present or not
-#[ -d $Path ] && echo "Thanks for providing directory." || echo "Please enter the valid directory path!" exit 1;
 
 if [ -d $Path ]
 then
@@ -23,9 +23,6 @@ echo ""
 echo -n "Specify the minimum size of the files to be compressed in MB (E.g. 0.1 or 5):-> "
 read userMentionedSize
 echo ""
-
-#echo -n "Specify directory path for moving compressed files to:-> "
-#read Path
 
 # Create archive folder if not already present
 
