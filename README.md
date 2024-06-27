@@ -18,3 +18,8 @@ In the given directory, if you find files more than given size (e.g 5MB) or file
         -> User should provide specific time
 
 #### Steps to run the PurgePro
+**Note**: Current script code is aligned with **MacOS** with `zsh` shell type.
+
+- Clone the repository on local machine
+- Make the script executable - `chmod +x purge.sh`
+- Execute the script - `./purge.sh` and hit enter 
