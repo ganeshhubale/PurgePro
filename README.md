@@ -14,5 +14,7 @@ In the given directory, if you find files more than given size (e.g 5MB) or file
 - Find all the files with size more than given size
 - Compress each file
 - Move the compressed files in `archive` folder
-- Make a cron job to run the script at given time
+- (InProgress) Make a cron job to run the script at given time
         -> User should provide specific time
+
+#### Steps to run the PurgePro
