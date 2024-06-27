@@ -5,7 +5,7 @@ echo "Welcome to PurgePro - streamlines file cleanup, effortlessly removing obso
 echo "------------------------------------------------------------------------------------------------------------------"
 echo ""
 # Provide the path of directory -> User should provide path
-print -n "Specify the path of directory to cleanup:-> "
+echo -n "Specify the path of directory to cleanup:-> "
 read Path
 
 # Check if the directory is present or not
@@ -20,11 +20,11 @@ else
 fi
 
 echo ""
-print -n "Specify the minimum size of the files to be compressed in MB (E.g. 0.1 or 5):-> "
+echo -n "Specify the minimum size of the files to be compressed in MB (E.g. 0.1 or 5):-> "
 read userMentionedSize
 echo ""
 
-#print -n "Specify directory path for moving compressed files to:-> "
+#echo -n "Specify directory path for moving compressed files to:-> "
 #read Path
 
 # Create archive folder if not already present
@@ -63,7 +63,7 @@ do
 done < "$archivePath/files.txt"
 
 echo ""
-print -n "Do you want to delete these archived files? (Y/y):-> "
+echo -n "Do you want to delete these archived files? (Y/y):-> "
 read response
 
 if [[ $response == "Y" || $response == "y" ]]
