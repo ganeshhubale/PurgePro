@@ -11,9 +11,14 @@ read Path
 
 # Check if the directory is present or not
 
-if [ -d $Path ]
+if [ -d "$Path" ]
 then
-	echo "Thanks for providing directory."
+	echo -n "Are you sure, you want to cleanup this directory? (y/n):-> "
+	read reply
+	if [[ $reply != "y" && $reply != "Y" ]];
+	then
+		exit 1
+	fi
 else
 	echo "Please enter the valid directory path!"
 	exit 1
@@ -60,7 +65,7 @@ do
 done < "$archivePath/files.txt"
 
 echo ""
-echo -n "Do you want to delete these archived files? (Y/y):-> "
+echo -n "Do you want to delete these archived files? (y/n):-> "
 read response
 
 if [[ $response == "Y" || $response == "y" ]]
