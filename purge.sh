@@ -28,7 +28,7 @@ echo ""
 
 # Used date convention considering files created daily  but not cleanedup
 currentDate=$(date +"%Y-%m-%d")
-archivePath="/Users/ganesh/Desktop/archive-$currentDate"
+archivePath="/Users/$(whoami)/Desktop/archive-$currentDate"
 mkdir $archivePath &> /dev/null
 
 if [[ $? -eq 0 ]]
